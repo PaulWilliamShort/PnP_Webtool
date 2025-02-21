@@ -1,0 +1,65 @@
+<div class="main-container">
+    <div class="content">  
+      <div class="map-section">
+        <img src="assets/map-placeholder.jpg" alt="Map Placeholder" />
+      </div>
+  
+      <div class="console-section">
+        <div class="console-log">
+            <p *ngFor="let log of consoleLogs" class="log-entry">{{ log }}</p>
+        </div>
+        <div class="dice-buttons">
+            <button *ngFor="let dice of dices" class="dice-button" (click)="selectDice(dice)">
+                D{{ dice }}
+            </button>
+        </div>
+        <div class="console-actions">
+            <button class="clear-button" (click)="clearDice()">Clear</button>
+            <button class="throw-button" (click)="throwDice()">Throw</button>
+        </div>
+    </div>
+    </div>
+  
+    <div class="bottom-sections">
+      <div class="stats-section">
+        <h2>Stats</h2>
+        <ul>
+          <li *ngFor="let stat of stats; let i = index">
+            <input [(ngModel)]="stat.name" placeholder="Stat Name">
+            <input type="number" [(ngModel)]="stat.value">
+            <button (click)="removeStat(i)">-</button>
+          </li>
+        </ul>
+        <button (click)="addStat()">Add Stat</button>
+      </div>
+      <div class="abilities-section">
+        <h2>Abilities</h2>
+        <ul>
+          <li *ngFor="let ability of abilities; let i = index">
+            <input [(ngModel)]="ability.name" placeholder="Ability Name">
+            <input type="number" [(ngModel)]="ability.value">
+            <button (click)="removeAbility(i)">-</button>
+          </li>
+        </ul>
+        <button (click)="addAbility()">Add Ability</button>
+      </div>
+      <div class="inventory-section">
+        <h2>Inventory</h2>
+        <ul>
+          <li *ngFor="let item of inventory; let i = index">
+            <input [(ngModel)]="item.name" placeholder="Item Name">
+            <input type="number" [(ngModel)]="item.value">
+            <button (click)="addItem()">-</button>
+          </li>
+        </ul>
+        <button (click)="addItem()">Add Item</button>
+      </div>
+    </div>
+  
+    <footer class="life-bar">
+      <button class="life-adjust" (click)="adjustLife(-1)">-</button>
+      <span class="life-value">{{ life }}</span>
+      <button class="life-adjust" (click)="adjustLife(1)">+</button>
+    </footer>
+  </div>
+  

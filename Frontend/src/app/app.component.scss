@@ -1,0 +1,76 @@
+.menu-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+    border: 2px solid #3b9ab2; /* Adds border to match UI */
+    background: #b5d4de; /* Lighter background for consistency */
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    border-radius: 8px; /* Softer UI with rounded corners */
+  
+    .menu-button {
+      padding: 8px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #3b9ab2; /* Primary button color */
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin: 5px;
+  
+      &:hover {
+        background: #2982a2;
+        transform: translateY(-2px);
+      }
+  
+      &:active {
+        background: #256f8a;
+        transform: scale(0.98);
+      }
+    }
+  
+    .session-title {
+      flex-grow: 1;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 8px 16px;
+      background: #3b9ab2; /* Styled box instead of plain text */
+      color: #ffffff;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin: 0 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  
+    .settings {
+      margin-left: 15px;
+    }
+  }
+  
+  /* Mobile Responsive Design */
+  @media (max-width: 768px) {
+    .menu-bar {
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      border-radius: 0;
+    }
+  
+    .menu-button {
+      width: 90%;
+      text-align: center;
+      margin: 8px 0;
+    }
+  
+    .session-title {
+      margin: 10px 0;
+      font-size: 18px;
+      padding: 6px 12px;
+    }
+  }
+  
