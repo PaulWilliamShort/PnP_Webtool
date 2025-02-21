@@ -93,4 +93,39 @@ export class PlayerUiComponent {
   removeItem(index: number) {
     this.inventory.splice(index, 1);
   }
+  pokerDeck: string[] = [];
+  drawnCard: string | null = null;
+
+  constructor() {
+    this.initializeDeck();
+  }
+
+  initializeDeck() {
+    const suits = ['♠', '♥', '♦', '♣'];
+    const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+    
+    this.pokerDeck = [];
+    suits.forEach(suit => {
+      values.forEach(value => {
+        this.pokerDeck.push(`${value} ${suit}`);
+      });
+    });
+
+    this.shuffleDeck();
+  }
+
+  shuffleDeck() {
+    this.pokerDeck.sort(() => Math.random() - 0.5);
+  }
+
+  drawCard() {
+    if (this.pokerDeck.length > 0) {
+      this.drawnCard = this.pokerDeck.pop() || null;
+      this.consoleLogs.push(`Drew a poker card: ${this.drawnCard}`);
+    } else {
+      this.drawnCard = null;
+      this.consoleLogs.push('The poker deck is empty! Reshuffling...');
+      this.initializeDeck();
+    }
+  }
 }
