@@ -1,19 +1,20 @@
 <div class="login-container">
-    <h2>Login</h2>
+    <h2>{{ 'LOGIN' | translate }}</h2>
     <form (ngSubmit)="login()">
       <div class="input-group">
-        <label for="username">Username</label>
+        <label for="username">{{ 'USERNAME' | translate }}</label>
         <input type="text" id="username" name="username" [(ngModel)]="username" required>
       </div>
   
       <div class="input-group">
-        <label for="password">Password</label>
+        <label for="password">{{ 'PASSWORD' | translate }}</label>
         <input type="password" id="password" name="password" [(ngModel)]="password" required>
       </div>
   
       <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
   
-      <button type="submit" class="login-button">Login</button>
+      <button type="submit" class="login-button">{{ 'LOGIN' | translate }}</button>
+      <button class="login-button" routerLink="/register">{{ 'REGISTER' | translate }}</button>
     </form>
   </div>
   

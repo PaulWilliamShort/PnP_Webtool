@@ -1,0 +1,109 @@
+<div class="create-character-container">
+    <h1>{{ 'CREATEYOURCHARACTER' | translate }}</h1>
+
+    <!-- Import from PDF -->
+    <div class="import-section">
+        <h2>{{ 'IMPORTFROMPDF' | translate }}</h2>
+        
+        <!-- Label linked to the hidden file input -->
+        <label for="pdfUpload" class="file-upload-container">
+          {{ 'CLICKTOUPLOAD' | translate }}
+        </label>
+    
+        <!-- File Input (Hidden) -->
+        <input type="file" id="pdfUpload" (change)="onFileSelected($event)" accept=".pdf"/>
+    
+        <!-- Display selected file name -->
+        <p *ngIf="file" class="selected-file">{{ 'SELECTEDFILE' | translate }} {{ file.name }}</p>
+    </div>
+    
+
+    <hr />
+
+    <h2>{{ 'PROFILEPICTURE' | translate }}</h2>
+    <div class="profile-picture-section">
+        <input type="file" (change)="onProfilePictureSelected($event)" accept="image/*" id="profilePictureInput" hidden/>
+        <div class="profile-picture-container" (click)="triggerFileInput()">
+            <img *ngIf="character.profilePicture" [src]="character.profilePicture" alt="Profile Picture" class="profile-preview"/>
+            <span *ngIf="!character.profilePicture" class="upload-placeholder">{{ 'CLICKTOUPLOAD' | translate }}</span>
+        </div>
+
+        <button *ngIf="character.profilePicture" class="remove-picture" (click)="removeProfilePicture()">{{ 'REMOVE' | translate }}</button>
+    </div>
+    <hr/>
+
+    <!-- General Info -->
+    <h2>{{ 'GENERALINFO' | translate }}</h2>
+    <div class="form-group"><label>{{ 'NAME' | translate }}:</label> <input type="text" [(ngModel)]="character.name" /></div>
+    <div class="form-group"><label>{{ 'NICKNAME' | translate }}:</label> <input type="text" [(ngModel)]="character.nickname" /></div>
+    <div class="form-group"><label>{{ 'BENNYS' | translate }}:</label> <input type="number" [(ngModel)]="character.bennys" /></div>
+    <div class="form-group"><label>{{ 'CONVICTION' | translate }}:</label> <input type="text" [(ngModel)]="character.conviction" /></div>
+
+    <!-- Attributes -->
+    <h2>{{ 'Attributes' | translate }}</h2>
+    <div *ngFor="let key of attributeKeys">
+      <div class="form-group"><label>{{ key }}</label> <input type="number" [(ngModel)]="character.attributes[key]" /></div>
+    </div>
+
+    <!-- Fight Info -->
+    <h2>{{ 'FIGHTINFO' | translate }}</h2>
+    <div *ngFor="let key of fightInfoKeys">
+      <div class="form-group">
+        <label>{{ key }}</label> 
+        <input type="number" [(ngModel)]="character.fightInfo[key]" />
+      </div>
+    </div>
+
+    <!-- Dynamic Sections -->
+    <h2>{{ 'ABILITIES' | translate }}</h2>
+    <div *ngFor="let ability of character.abilities; let i = index" class="dynamic-section">
+      <input class="dynamic-input" [(ngModel)]="ability.name" [attr.placeholder]="'ABILITYNAME' | translate">
+      <input class="dynamic-input" [(ngModel)]="ability.value" [attr.placeholder]="'VALUE' | translate">
+      <button class="remove-button" (click)="removeAbility(i)">-</button>
+    </div>
+    <button class="add-button" (click)="addAbility()">{{ 'ADDABILITY' | translate }}</button>
+
+    <h2>{{ 'HANDICAPS' | translate }}</h2>
+    <div *ngFor="let handicap of character.handicaps; let i = index" class="dynamic-section">
+      <input class="dynamic-input" [(ngModel)]="handicap.name" [attr.placeholder]="'HANDICAPNAME' | translate">
+      <input class="dynamic-input" [(ngModel)]="handicap.value" [attr.placeholder]="'INTENSITY' | translate">
+      <button class="remove-button" (click)="removeHandicap(i)">-</button>
+    </div>
+    <button class="add-button" (click)="addHandicap()">{{ 'ADDHANDICAP' | translate }}</button>
+
+    <h2>{{ 'TALENTSANDLEVELUPS' | translate }}</h2>
+    <div *ngFor="let talent of character.talents; let i = index" class="dynamic-section">
+      <input class="dynamic-input" [(ngModel)]="talent.name" [attr.placeholder]="'TALENTNAME' | translate">
+      <input class="dynamic-input" [(ngModel)]="talent.value" [attr.placeholder]="'VALUE' | translate">
+      <button class="remove-button" (click)="removeTalent(i)">-</button>
+    </div>
+    <button class="add-button" (click)="addTalent()">{{ 'ADDTALENT' | translate }}</button>
+
+    <h2>{{ 'SPELLS' | translate }}</h2>
+    <div *ngFor="let spell of character.spells; let i = index" class="dynamic-section">
+      <input class="dynamic-input" [(ngModel)]="spell.name" [attr.placeholder]="'NAME' | translate">
+      <input class="dynamic-input" [(ngModel)]="spell.magicPoints" [attr.placeholder]="'MAGICPOINTS' | translate">
+      <input class="dynamic-input" [(ngModel)]="spell.range" [attr.placeholder]="'RANGE' | translate">
+      <input class="dynamic-input" [(ngModel)]="spell.duration" [attr.placeholder]="'DURATION' | translate">
+      <input class="dynamic-input" [(ngModel)]="spell.effect" [attr.placeholder]="'EFFECT' | translate">
+      <button class="remove-button" (click)="removeSpell(i)">-</button>
+    </div>
+    <button class="add-button" (click)="addSpell()">{{ 'ADDSPELL' | translate }}</button>
+
+    <h2>{{ 'WEAPONS' | translate }}</h2>
+    <div *ngFor="let weapon of character.weapons; let i = index" class="dynamic-section">
+      <input class="dynamic-input" [(ngModel)]="weapon.name" [attr.placeholder]="'NAME' | translate">
+      <input class="dynamic-input" [(ngModel)]="weapon.range" [attr.placeholder]="'RANGE' | translate">
+      <input class="dynamic-input" [(ngModel)]="weapon.damage" [attr.placeholder]="'DAMAGE' | translate">
+      <input class="dynamic-input" [(ngModel)]="weapon.armorPiercing" [attr.placeholder]="'ARMORPIERCING' | translate">
+      <input class="dynamic-input" [(ngModel)]="weapon.fireRate" [attr.placeholder]="'FIRERATE' | translate">
+      <input class="dynamic-input" [(ngModel)]="weapon.weight" [attr.placeholder]="'WEIGHT' | translate">
+      <input class="dynamic-input" [(ngModel)]="weapon.notes" [attr.placeholder]="'NOTES' | translate">
+      <button class="remove-button" (click)="removeWeapon(i)">-</button>
+    </div>
+    <button class="add-button" (click)="addWeapon()">{{ 'ADDWEAPON' | translate }}</button>
+    <div class="create-button-container">
+        <button class="create-button" (click)="createCharacter()">{{ 'CREATECHARACTER' | translate }}</button>
+    </div>
+</div>
+

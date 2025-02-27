@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-player-ui',
   templateUrl: './player-ui.component.html',
   styleUrls: ['./player-ui.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, NgFor, FormsModule],
+  imports: [CommonModule, RouterModule, NgFor, FormsModule, TranslateModule],
 })
-export class PlayerUiComponent {
+export class PlayerUiComponent implements OnInit {
   players = [
     { name: 'Player 1', image: 'assets/player1.jpg' },
     { name: 'Player 2', image: 'assets/player2.jpg' },
@@ -23,55 +24,108 @@ export class PlayerUiComponent {
   consoleLogs: string[] = [];
   life = 100;
 
-  stats = [
-    { name: 'Strength', value: 10 },
-    { name: 'Agility', value: 8 }
-  ];
+  stats: { name: string; value: number }[] = [];
+  abilities: { name: string; value: number }[] = [];
+  inventory: { name: string; value: number }[] = [];
+  healthStates: string[] = [];
+  exhaustionStates: string[] = [];
 
-  abilities = [
-    { name: 'Fireball', value: 3 },
-    { name: 'Heal', value: 5 }
-  ];
+  selectedHealth!: string;
+  selectedExhaustion!: string;
 
-  inventory = [
-    { name: 'Potion', value: 2 },
-    { name: 'Sword', value: 1 }
-  ];
+  constructor(private translate: TranslateService) {}
 
-  // Method to select a dice for the throw
-  selectDice(dice: number) {
-    this.selectedDices.push(dice);
-    this.consoleLogs.push(`Selected d${dice}`);
+  ngOnInit() {
+    this.initializeTranslations();
+    this.initializeDeck();
   }
 
-  // Method to throw all selected dice
+  private initializeTranslations() {
+    this.translate.get([
+      'STRENGTH', 'AGILITY',
+      'FIREBALL', 'HEAL',
+      'POTION', 'SWORD',
+      'HEALTH_INJURED', 'HEALTH_WOUND_1', 'HEALTH_WOUND_2', 'HEALTH_WOUND_3',
+      'EXHAUSTION_MINUS_1', 'EXHAUSTION_MINUS_2'
+    ]).subscribe(translations => {
+      this.stats = [
+        { name: translations['STRENGTH'], value: 10 },
+        { name: translations['AGILITY'], value: 8 }
+      ];
+
+      this.abilities = [
+        { name: translations['FIREBALL'], value: 3 },
+        { name: translations['HEAL'], value: 5 }
+      ];
+
+      this.inventory = [
+        { name: translations['POTION'], value: 2 },
+        { name: translations['SWORD'], value: 1 }
+      ];
+
+      this.healthStates = [
+        translations['HEALTH_INJURED'],
+        translations['HEALTH_WOUND_1'],
+        translations['HEALTH_WOUND_2'],
+        translations['HEALTH_WOUND_3']
+      ];
+      this.selectedHealth = this.healthStates[0];
+
+      this.exhaustionStates = [
+        translations['EXHAUSTION_MINUS_1'],
+        translations['EXHAUSTION_MINUS_2']
+      ];
+      this.selectedExhaustion = this.exhaustionStates[0];
+    });
+  }
+
+  selectDice(dice: number) {
+    this.selectedDices.push(dice);
+    this.translate.get('DICE_SELECTED', { dice }).subscribe(translatedText => {
+      this.consoleLogs.push(translatedText);
+    });
+  }
+
   throwDice() {
     if (this.selectedDices.length === 0) {
-      this.consoleLogs.push('No dice selected.');
+      this.translate.get('NO_DICE_SELECTED').subscribe(translatedText => {
+        this.consoleLogs.push(translatedText);
+      });
       return;
     }
 
+    let totalSum = 0;
     this.selectedDices.forEach(dice => {
       const result = Math.ceil(Math.random() * dice);
-      this.consoleLogs.push(`Player rolled a d${dice}: ${result}`);
+      totalSum += result;
+      this.translate.get('DICE_ROLLED', { dice, result }).subscribe(translatedText => {
+        this.consoleLogs.push(translatedText);
+      });
     });
 
-    // Clear selected dices after the throw
+    this.translate.get('TOTAL_DICE_SUM', { totalSum }).subscribe(translatedText => {
+      this.consoleLogs.push(translatedText);
+    });
+
     this.selectedDices = [];
   }
 
-  // Method to clear console logs
   clearDice() {
     this.consoleLogs = [];
+    this.selectedDices = [];
   }
 
   adjustLife(amount: number) {
     this.life += amount;
-    this.consoleLogs.push(`Life adjusted by ${amount}. Current life: ${this.life}`);
+    this.translate.get('LIFE_ADJUSTED', { amount, life: this.life }).subscribe(translatedText => {
+      this.consoleLogs.push(translatedText);
+    });
   }
 
   addStat() {
-    this.stats.push({ name: 'New Stat', value: 0 });
+    this.translate.get('NEW_STAT').subscribe(translatedText => {
+      this.stats.push({ name: translatedText, value: 0 });
+    });
   }
 
   removeStat(index: number) {
@@ -79,7 +133,9 @@ export class PlayerUiComponent {
   }
 
   addAbility() {
-    this.abilities.push({ name: 'New Ability', value: 0 });
+    this.translate.get('NEW_ABILITY').subscribe(translatedText => {
+      this.abilities.push({ name: translatedText, value: 0 });
+    });
   }
 
   removeAbility(index: number) {
@@ -87,23 +143,22 @@ export class PlayerUiComponent {
   }
 
   addItem() {
-    this.inventory.push({ name: 'New Item', value: 0 });
+    this.translate.get('NEW_ITEM').subscribe(translatedText => {
+      this.inventory.push({ name: translatedText, value: 0 });
+    });
   }
 
   removeItem(index: number) {
     this.inventory.splice(index, 1);
   }
+
   pokerDeck: string[] = [];
   drawnCard: string | null = null;
-
-  constructor() {
-    this.initializeDeck();
-  }
 
   initializeDeck() {
     const suits = ['♠', '♥', '♦', '♣'];
     const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-    
+
     this.pokerDeck = [];
     suits.forEach(suit => {
       values.forEach(value => {
@@ -121,10 +176,14 @@ export class PlayerUiComponent {
   drawCard() {
     if (this.pokerDeck.length > 0) {
       this.drawnCard = this.pokerDeck.pop() || null;
-      this.consoleLogs.push(`Drew a poker card: ${this.drawnCard}`);
+      this.translate.get('DREW_POKER_CARD', { card: this.drawnCard }).subscribe(translatedText => {
+        this.consoleLogs.push(translatedText);
+      });
     } else {
       this.drawnCard = null;
-      this.consoleLogs.push('The poker deck is empty! Reshuffling...');
+      this.translate.get('POKER_DECK_EMPTY').subscribe(translatedText => {
+        this.consoleLogs.push(translatedText);
+      });
       this.initializeDeck();
     }
   }

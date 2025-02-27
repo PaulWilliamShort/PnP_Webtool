@@ -1,8 +1,32 @@
 <header class="menu-bar">
-    <button class="menu-button" routerLink="/create">Erstellen</button>
-    <button class="menu-button" routerLink="/home">Homepage</button>
+    <button class="menu-button" routerLink="/create">{{ 'CREATE' | translate }}</button>
+    <button class="menu-button" routerLink="/home">{{ 'HOMEPAGE' | translate }}</button>
     <h1 class="session-name">Session Name</h1>
-    <button class="menu-button" routerLink="/login">Login</button>
-    <button class="menu-button settings">Settings</button>
+    <button class="menu-button" routerLink="/login">{{ 'LOGIN' | translate }}</button>
+    <button class="menu-button settings" (click)="toggleSettings()">{{ 'SETTINGS' | translate }}</button>
 </header>
+
+<div class="settings-popup" *ngIf="isSettingsOpen">
+  <h3>{{ 'SETTINGS' | translate }}</h3>
+
+  <div class="settings-option">
+    <label for="language">{{ 'LANGUAGE' | translate }}</label>
+    <select id="language" [(ngModel)]="selectedLanguage" (change)="changeLanguage(selectedLanguage)">
+      <option value="en">{{ 'ENGLISH' | translate }}</option>
+      <option value="de">{{ 'GERMAN' | translate }}</option>
+    </select>
+  </div>
+
+  <div class="settings-option">
+    <label for="theme">{{ 'THEME' | translate }}</label>
+    <select id="theme" [(ngModel)]="selectedTheme" (change)="changeTheme($event)">
+      <option value="light">{{ 'LIGHT' | translate }}</option>
+      <option value="dark">{{ 'DARK' | translate }}</option>
+      <option value="blue">{{ 'BLUE' | translate }}</option>
+    </select>
+  </div>
+
+  <button class="logout-button" (click)="logout()">{{ 'LOGOUT' | translate }}</button>
+</div>
+
 <router-outlet></router-outlet>

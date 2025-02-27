@@ -1,0 +1,28 @@
+<div class="register-container">
+    <h1>{{ 'REGISTER' | translate }}</h1>
+    
+    <form (ngSubmit)="register()">
+      <div class="form-group">
+        <label>{{ 'MAILADRESS' | translate }}</label>
+        <input type="email" [(ngModel)]="user.email" name="email" required placeholder="Enter your email">
+      </div>
+  
+      <div class="form-group">
+        <label>{{ 'PASSWORD' | translate }}</label>
+        <input type="password" [(ngModel)]="user.password" name="password" required placeholder="Enter your password">
+      </div>
+  
+      <div class="form-group">
+        <label>{{ 'USERNAME' | translate }}</label>
+        <input type="text" [(ngModel)]="user.username" name="username" required placeholder="Choose a username">
+      </div>
+  
+      <div class="form-group">
+        <label>{{ 'VERIFICATIONTOKEN' | translate }}</label>
+        <input type="text" [(ngModel)]="user.verificationToken" name="verificationToken" required placeholder="Enter your verification token">
+      </div>
+  
+      <button type="submit" class="register-button">{{ 'REGISTER' | translate }}</button>
+    </form>
+  </div>
+  

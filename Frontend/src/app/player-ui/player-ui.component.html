@@ -14,59 +14,77 @@
           </button>
       </div>
       <div class="console-actions">
-          <button class="clear-button" (click)="clearDice()">Clear</button>
-          <button class="throw-button" (click)="throwDice()">Throw</button>
+          <button class="clear-button" (click)="clearDice()">{{ 'CLEAR' | translate }}</button>
+          <button class="throw-button" (click)="throwDice()">{{ 'THROW' | translate }}</button>
       </div>
     </div>
   </div>
 
-  <div class="poker-section">
-    <h2>Draw a Poker Card</h2>
-    <div class="card-display" *ngIf="drawnCard">
-      <p class="card">{{ drawnCard }}</p>
-    </div>
-    <button class="draw-button" (click)="drawCard()">Draw Card</button>
-  </div>
-
-  <div class="bottom-sections">
+  <div class="skills-and-inventory-sections">
     <div class="stats-section">
-      <h2>Stats</h2>
+      <h2>{{ 'STATS' | translate }}</h2>
       <ul>
         <li *ngFor="let stat of stats; let i = index">
-          <input [(ngModel)]="stat.name" placeholder="Stat Name">
+          <input [(ngModel)]="stat.name" [attr.placeholder]="'STATNAME' | translate">
           <input type="number" [(ngModel)]="stat.value">
           <button (click)="removeStat(i)">-</button>
         </li>
       </ul>
-      <button (click)="addStat()">Add Stat</button>
+      <button (click)="addStat()">{{ 'ADDSTAT' | translate }}</button>
     </div>
     <div class="abilities-section">
-      <h2>Abilities</h2>
+      <h2>{{ 'ABILITIES' | translate }}</h2>
       <ul>
         <li *ngFor="let ability of abilities; let i = index">
-          <input [(ngModel)]="ability.name" placeholder="Ability Name">
+          <input [(ngModel)]="ability.name" [attr.placeholder]="'ABILITYNAME' | translate">
           <input type="number" [(ngModel)]="ability.value">
           <button (click)="removeAbility(i)">-</button>
         </li>
       </ul>
-      <button (click)="addAbility()">Add Ability</button>
+      <button (click)="addAbility()">{{ 'ADDABILITY' | translate }}</button>
     </div>
     <div class="inventory-section">
-      <h2>Inventory</h2>
+      <h2>{{ 'INVENTORY' | translate }}</h2>
       <ul>
         <li *ngFor="let item of inventory; let i = index">
-          <input [(ngModel)]="item.name" placeholder="Item Name">
+          <input [(ngModel)]="item.name" [attr.placeholder]="'ITEMNAME' | translate">
           <input type="number" [(ngModel)]="item.value">
           <button (click)="addItem()">-</button>
         </li>
       </ul>
-      <button (click)="addItem()">Add Item</button>
+      <button (click)="addItem()">{{ 'ADDITEM' | translate }}</button>
     </div>
   </div>
 
-  <footer class="life-bar">
-    <button class="life-adjust" (click)="adjustLife(-1)">-</button>
-    <span class="life-value">{{ life }}</span>
-    <button class="life-adjust" (click)="adjustLife(1)">+</button>
-  </footer>
+  <div class="bottom-sections">
+    <div class="poker-section">
+      <h2>{{ 'DRAWAPOKERCARD' | translate }}</h2>
+      <div class="card-display" *ngIf="drawnCard">
+        <p class="card">{{ drawnCard }}</p>
+      </div>
+      <button class="draw-button" (click)="drawCard()">{{ 'DRAWCARD' | translate }}</button>
+    </div>
+  
+    <div class="life-section">
+      <h2>{{ 'CHARACTERLIFE' | translate }}</h2>
+      <div class="life-group">
+        <h3>{{ 'HEALTH' | translate }}</h3>
+        <label *ngFor="let state of healthStates">
+          <input type="radio" name="health" [value]="state" [(ngModel)]="selectedHealth">
+          {{ state }}
+        </label>
+      </div>
+    </div>
+  
+    <div class="exhaustion-section">
+      <h2>{{ 'EXHAUSTION' | translate }}</h2>
+      <div class="life-group">
+        <h3>{{ 'EXHAUSTIONLEVELS' | translate }}</h3>
+        <label *ngFor="let state of exhaustionStates">
+          <input type="radio" name="exhaustion" [value]="state" [(ngModel)]="selectedExhaustion">
+          {{ state }}
+        </label>
+      </div>
+    </div>
+  </div>  
 </div>
