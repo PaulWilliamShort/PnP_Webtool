@@ -1,0 +1,22 @@
+User anlegen (hardcoded / admin panel)
+    Gamemaster, user, spieler_user, Gamemaster_chars?, user_chars
+    flag spieler nutzer
+
+
+    |User|
+    |U_ID|Name|Passwort|mail?|LastLogin|SystemRole|
+
+    |Session|
+    |S_ID|U_ID|Started|
+
+    |Characters|
+    |C_ID|owner(U_ID)|Session(S_ID)|isFromGM|MaxLP|LP|type|MaxMana|Mana|Notes(maybe in markdown or html)|
+    
+    |Items|
+    |I_ID|creator(U_ID)|dmg|type|notes|
+
+    |Invetory|
+    |S_ID|I_ID|C_ID|count|
+
+    |Handicaps|
+    |C_ID|S_ID|Name|Impact|description|
