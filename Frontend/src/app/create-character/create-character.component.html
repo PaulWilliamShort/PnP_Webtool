@@ -39,25 +39,29 @@
     <div class="form-group"><label>{{ 'BENNYS' | translate }}:</label> <input type="number" [(ngModel)]="character.bennys" /></div>
     <div class="form-group"><label>{{ 'CONVICTION' | translate }}:</label> <input type="text" [(ngModel)]="character.conviction" /></div>
 
-    <!-- Attributes -->
-    <h2>{{ 'Attributes' | translate }}</h2>
-    <div *ngFor="let key of attributeKeys">
-      <div class="form-group"><label>{{ key }}</label> <input type="number" [(ngModel)]="character.attributes[key]" /></div>
-    </div>
+<!-- Attribute Keys -->
+<h2>{{ 'Attributes' | translate }}</h2>
+<div *ngFor="let attr of attributeKeys">
+  <div class="form-group">
+    <label>{{ attr.translated }}</label>
+    <input type="number" [(ngModel)]="character.attributes[attr.key]" />
+  </div>
+</div>
 
-    <!-- Fight Info -->
-    <h2>{{ 'FIGHTINFO' | translate }}</h2>
-    <div *ngFor="let key of fightInfoKeys">
-      <div class="form-group">
-        <label>{{ key }}</label> 
-        <input type="number" [(ngModel)]="character.fightInfo[key]" />
-      </div>
-    </div>
+<!-- Fight Info -->
+<h2>{{ 'FIGHTINFO' | translate }}</h2>
+<div *ngFor="let info of fightInfoKeys">
+  <div class="form-group">
+    <label>{{ info.translated }}</label>
+    <input type="number" [(ngModel)]="character.fightInfo[info.key]" />
+  </div>
+</div>
+
 
     <!-- Dynamic Sections -->
     <h2>{{ 'ABILITIES' | translate }}</h2>
     <div *ngFor="let ability of character.abilities; let i = index" class="dynamic-section">
-      <input class="dynamic-input" [(ngModel)]="ability.name" [attr.placeholder]="'ABILITYNAME' | translate">
+      <input class="dynamic-input" [(ngModel)]="ability.name" [attr.placeholder]="'ABILITY_NAME' | translate">
       <input class="dynamic-input" [(ngModel)]="ability.value" [attr.placeholder]="'VALUE' | translate">
       <button class="remove-button" (click)="removeAbility(i)">-</button>
     </div>
@@ -65,7 +69,7 @@
 
     <h2>{{ 'HANDICAPS' | translate }}</h2>
     <div *ngFor="let handicap of character.handicaps; let i = index" class="dynamic-section">
-      <input class="dynamic-input" [(ngModel)]="handicap.name" [attr.placeholder]="'HANDICAPNAME' | translate">
+      <input class="dynamic-input" [(ngModel)]="handicap.name" [attr.placeholder]="'HANDICAP_NAME' | translate">
       <input class="dynamic-input" [(ngModel)]="handicap.value" [attr.placeholder]="'INTENSITY' | translate">
       <button class="remove-button" (click)="removeHandicap(i)">-</button>
     </div>
@@ -73,7 +77,7 @@
 
     <h2>{{ 'TALENTSANDLEVELUPS' | translate }}</h2>
     <div *ngFor="let talent of character.talents; let i = index" class="dynamic-section">
-      <input class="dynamic-input" [(ngModel)]="talent.name" [attr.placeholder]="'TALENTNAME' | translate">
+      <input class="dynamic-input" [(ngModel)]="talent.name" [attr.placeholder]="'TALENT_NAME' | translate">
       <input class="dynamic-input" [(ngModel)]="talent.value" [attr.placeholder]="'VALUE' | translate">
       <button class="remove-button" (click)="removeTalent(i)">-</button>
     </div>

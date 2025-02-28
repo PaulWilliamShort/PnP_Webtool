@@ -19,10 +19,8 @@
 
   <div class="settings-option">
     <label for="theme">{{ 'THEME' | translate }}</label>
-    <select id="theme" [(ngModel)]="selectedTheme" (change)="changeTheme($event)">
-      <option value="light">{{ 'LIGHT' | translate }}</option>
-      <option value="dark">{{ 'DARK' | translate }}</option>
-      <option value="blue">{{ 'BLUE' | translate }}</option>
+    <select id="theme" [(ngModel)]="selectedTheme" (change)="changeTheme(selectedTheme)">
+      <option *ngFor="let theme of themes" [value]="theme">{{ theme | titlecase }}</option>
     </select>
   </div>
 

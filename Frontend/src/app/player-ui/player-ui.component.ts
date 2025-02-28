@@ -42,28 +42,12 @@ export class PlayerUiComponent implements OnInit {
 
   private initializeTranslations() {
     this.translate.get([
-      'STRENGTH', 'AGILITY',
-      'FIREBALL', 'HEAL',
-      'POTION', 'SWORD',
-      'HEALTH_INJURED', 'HEALTH_WOUND_1', 'HEALTH_WOUND_2', 'HEALTH_WOUND_3',
-      'EXHAUSTION_MINUS_1', 'EXHAUSTION_MINUS_2'
+      'HEALTHY', 'HEALTH_INJURED', 'HEALTH_WOUND_1', 'HEALTH_WOUND_2', 'HEALTH_WOUND_3',
+      'FIT','EXHAUSTION_MINUS_1', 'EXHAUSTION_MINUS_2'
     ]).subscribe(translations => {
-      this.stats = [
-        { name: translations['STRENGTH'], value: 10 },
-        { name: translations['AGILITY'], value: 8 }
-      ];
-
-      this.abilities = [
-        { name: translations['FIREBALL'], value: 3 },
-        { name: translations['HEAL'], value: 5 }
-      ];
-
-      this.inventory = [
-        { name: translations['POTION'], value: 2 },
-        { name: translations['SWORD'], value: 1 }
-      ];
 
       this.healthStates = [
+        translations['HEALTHY'],
         translations['HEALTH_INJURED'],
         translations['HEALTH_WOUND_1'],
         translations['HEALTH_WOUND_2'],
@@ -72,6 +56,7 @@ export class PlayerUiComponent implements OnInit {
       this.selectedHealth = this.healthStates[0];
 
       this.exhaustionStates = [
+        translations['FIT'],
         translations['EXHAUSTION_MINUS_1'],
         translations['EXHAUSTION_MINUS_2']
       ];

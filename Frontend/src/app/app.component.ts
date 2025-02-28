@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +14,13 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [CommonModule, RouterModule, FormsModule, TranslateModule],
 })
 export class AppComponent {
+  themes = ['light', 'dark', 'red'];
   isSettingsOpen = false;
-  selectedTheme = 'light';
+  selectedTheme: string;
   selectedLanguage = 'en';
 
-  constructor(private cdRef: ChangeDetectorRef, private translate: TranslateService) {
+  constructor(private cdRef: ChangeDetectorRef, private translate: TranslateService, private themeService: ThemeService) {
+    this.selectedTheme = this.themeService.getTheme();
     this.translate.addLangs(['en', 'de', 'fr']);
     this.translate.setDefaultLang('de');
     const savedLang = localStorage.getItem('language') || 'de';
@@ -25,10 +28,15 @@ export class AppComponent {
     this.selectedLanguage = savedLang;
   }
 
+  changeTheme(theme: string): void {
+    this.themeService.setTheme(theme);
+    this.selectedTheme = theme;
+  }
   changeLanguage(lang: string) {
     this.translate.use(lang);
     this.selectedLanguage = lang;
     localStorage.setItem('language', lang);
+    location.reload();
   }
 
   toggleSettings() {
@@ -36,20 +44,7 @@ export class AppComponent {
     console.log("Settings Open:", this.isSettingsOpen);
     this.cdRef.detectChanges();
   }
-
-  // changeLanguage(event: Event, lang: string) {
-  //   const target = event.target as HTMLSelectElement;
-  //   this.selectedLanguage = target.value;
-  //   console.log(`Language changed to: ${this.selectedLanguage}`);
-  // }
-
-  changeTheme(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    this.selectedTheme = target.value;
-    document.body.setAttribute('data-theme', this.selectedTheme);
-    console.log(`Theme changed to: ${this.selectedTheme}`);
-  }
-
+  
   logout() {
     console.log('User logged out');
     window.location.href = '/login';

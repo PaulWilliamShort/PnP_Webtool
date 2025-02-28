@@ -1,29 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 interface CharacterField {
   name: string;
+  namePlaceholder: string;
   value: string;
 }
 
 interface SpellField {
   name: string;
+  namePlaceholder: string;
   magicPoints: string;
+  magicPointsPlaceholder: string;
   range: string;
+  rangePlaceholder: string;
   duration: string;
+  durationPlaceholder: string;
   effect: string;
+  effectPlaceholder: string;
 }
 
 interface WeaponField {
   name: string;
+  namePlaceholder: string;
   range: string;
+  rangePlaceholder: string;
   damage: string;
+  damagePlaceholder: string;
   armorPiercing: string;
+  armorPiercingPlaceholder: string;
   fireRate: string;
+  fireRatePlaceholder: string;
   weight: string;
+  weightPlaceholder: string;
   notes: string;
+  notesPlaceholder: string;
 }
 
 interface Character {
@@ -48,7 +61,7 @@ interface Character {
   standalone: true,
   imports: [CommonModule, FormsModule, TranslateModule],
 })
-export class CreateCharacterComponent {
+export class CreateCharacterComponent implements OnInit {
   character: Character = {
     name: '',
     nickname: '',
@@ -75,7 +88,39 @@ export class CreateCharacterComponent {
   };
 
   file: File | null = null;
+
+  attributeKeys: { key: string; translated: string }[] = [];
+  fightInfoKeys: { key: string; translated: string }[] = [];
+
   constructor(private translate: TranslateService) {}
+
+  ngOnInit() {
+    this.initializeTranslations();
+  }
+
+  private initializeTranslations() {
+    // Fetch translations for attributes from "ATTRIBUTES_obj"
+    this.translate.get('ATTRIBUTES_obj').subscribe(translations => {
+      if (translations && typeof translations === 'object') {
+        this.attributeKeys = Object.keys(this.character.attributes).map(attr => ({
+          key: attr,
+          translated: translations[attr.toUpperCase()] || attr  // Fallback to raw key if translation is missing
+        }));
+      }
+    });
+  
+    // Fetch translations for fight info from "FIGHTINFO_obj"
+    this.translate.get('FIGHTINFO_obj').subscribe(translations => {
+      if (translations && typeof translations === 'object') {
+        this.fightInfoKeys = Object.keys(this.character.fightInfo).map(attr => ({
+          key: attr,
+          translated: translations[attr.toUpperCase()] || attr  // Fallback to raw key if translation is missing
+        }));
+      }
+    });
+  }
+  
+
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -106,18 +151,15 @@ export class CreateCharacterComponent {
     document.getElementById('profilePictureInput')?.click();
   }
 
-
-  get attributeKeys() {
-    return Object.keys(this.character.attributes);
-  }
-
-  get fightInfoKeys() {
-    return Object.keys(this.character.fightInfo);
-  }
-
   // Dynamic field management
   addAbility() {
-    this.character.abilities.push({ name: this.translate.instant('ABILITY_NAME'), value: '' });
+    this.translate.get('ABILITYNAME').subscribe(translation => {
+      this.character.abilities.push({
+        name: '',
+        namePlaceholder: translation,
+        value: '',
+      });
+    });
   }
 
   removeAbility(index: number) {
@@ -125,7 +167,13 @@ export class CreateCharacterComponent {
   }
 
   addHandicap() {
-    this.character.handicaps.push({ name: this.translate.instant('HANDICAP_NAME'), value: '' });
+    this.translate.get('HANDICAPNAME').subscribe(translation => {
+      this.character.handicaps.push({
+        name: '',
+        namePlaceholder: translation,
+        value: '',
+      });
+    });
   }
 
   removeHandicap(index: number) {
@@ -133,7 +181,13 @@ export class CreateCharacterComponent {
   }
 
   addTalent() {
-    this.character.talents.push({ name: this.translate.instant('TALENT_NAME'), value: '' });
+    this.translate.get('TALENT_NAME').subscribe(translation => {
+      this.character.talents.push({
+        name: '',
+        namePlaceholder: translation,
+        value: '',
+      });
+    });
   }
 
   removeTalent(index: number) {
@@ -141,12 +195,22 @@ export class CreateCharacterComponent {
   }
 
   addSpell() {
-    this.character.spells.push({ 
-      name: this.translate.instant('SPELL_NAME'), 
-      magicPoints: this.translate.instant('MAGICPOINTS'), 
-      range: this.translate.instant('RANGE'), 
-      duration: this.translate.instant('DUARION'), 
-      effect: this.translate.instant('EFFECTS') });
+    this.translate
+      .get(['SPELL_NAME', 'MAGICPOINTS', 'RANGE', 'DURATION', 'EFFECTS'])
+      .subscribe(translations => {
+        this.character.spells.push({
+          name: '',
+          namePlaceholder: translations['SPELL_NAME'],
+          magicPoints: '',
+          magicPointsPlaceholder: translations['MAGICPOINTS'],
+          range: '',
+          rangePlaceholder: translations['RANGE'],
+          duration: '',
+          durationPlaceholder: translations['DURATION'],
+          effect: '',
+          effectPlaceholder: translations['EFFECTS'],
+        });
+      });
   }
 
   removeSpell(index: number) {
@@ -154,14 +218,34 @@ export class CreateCharacterComponent {
   }
 
   addWeapon() {
-    this.character.weapons.push({ 
-      name: this.translate.instant('WEAPON_NAME'), 
-      range: this.translate.instant('RANGE'), 
-      damage: this.translate.instant('DAMAGE'), 
-      armorPiercing: this.translate.instant('ARMORPIERCING'), 
-      fireRate: this.translate.instant('FIRERATE'), 
-      weight: this.translate.instant('WEIGHT'), 
-      notes: this.translate.instant('NOTES') });
+    this.translate
+      .get([
+        'WEAPON_NAME',
+        'RANGE',
+        'DAMAGE',
+        'ARMORPIERCING',
+        'FIRERATE',
+        'WEIGHT',
+        'NOTES',
+      ])
+      .subscribe(translations => {
+        this.character.weapons.push({
+          name: '',
+          namePlaceholder: translations['WEAPON_NAME'],
+          range: '',
+          rangePlaceholder: translations['RANGE'],
+          damage: '',
+          damagePlaceholder: translations['DAMAGE'],
+          armorPiercing: '',
+          armorPiercingPlaceholder: translations['ARMORPIERCING'],
+          fireRate: '',
+          fireRatePlaceholder: translations['FIRERATE'],
+          weight: '',
+          weightPlaceholder: translations['WEIGHT'],
+          notes: '',
+          notesPlaceholder: translations['NOTES'],
+        });
+      });
   }
 
   removeWeapon(index: number) {
