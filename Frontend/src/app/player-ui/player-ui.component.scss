@@ -214,7 +214,7 @@
       width: 120px;
       padding: 8px;
       font-size: 14px;
-      background: var(--button-color-primary);
+      background: var(--input-background);
       color: var(--console-text);
       border: 1px solid var(--border-primary);
       border-radius: 4px;
@@ -226,6 +226,16 @@
         outline: none;
         border-color: var(--border-primary);
       }
+    }
+    input[type="number"] {
+      -moz-appearance: textfield; // Entfernt Pfeile in Firefox
+      appearance: textfield; // Standard
+    }
+    
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 
     button {

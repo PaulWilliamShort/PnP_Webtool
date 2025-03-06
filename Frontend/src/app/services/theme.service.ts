@@ -56,7 +56,7 @@ export class ThemeService {
       '--hover-radio': '#70e000',
       '--log-text': '#70e000',
       '--create-background': '#1b1b2f',
-      '--input-background': '#3a3f5a',
+      '--input-background': '#2b2d42',
       '--upload-background': '#3a3f5a',
       '--import-background': '#2b2d42'
     },
