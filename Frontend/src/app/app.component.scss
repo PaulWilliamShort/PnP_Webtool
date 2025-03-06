@@ -10,6 +10,14 @@
   --h3-color: #1f2d3d;
   --label-color: #2e3a59;
 }
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: var(--background-color-main);
+  overflow-x: hidden;
+}
 
 .menu-bar {
   display: flex;
@@ -28,7 +36,7 @@
     font-weight: bold;
     cursor: pointer;
     background: var(--border-primary);
-    color: var(--button-color-primary);
+    color: var(--menu--button-color-primary);
     border: none;
     border-radius: 6px;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -45,14 +53,15 @@
     }
   }
 
-  .session-title {
+  .session-name {
     flex-grow: 1;
     text-align: center;
     font-size: 20px;
     font-weight: bold;
+    font-family: 'Roboto', sans-serif;
     padding: 8px 16px;
     background: var(--border-primary);
-    color: var(--button-color-primary);
+    color: var(--menu--button-color-primary);
     border-radius: 6px;
     text-transform: uppercase;
     letter-spacing: 0.8px;
@@ -69,7 +78,7 @@
   top: 90px; // Moved 40px down
   right: 20px;
   width: 250px;
-  background: linear-gradient(to bottom, var(--background-gradient-1), var(--background-primary));
+  background: var(--settings-background);
   border: 2px solid var(--border-primary);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -105,7 +114,7 @@
       font-size: 14px;
       border: 1px solid var(--border-primary);
       border-radius: 5px;
-      background: var(--button-color-primary);
+      background: var(--input-background);
       color: var(--label-color);
       cursor: pointer;
       transition: border 0.3s ease;
@@ -127,7 +136,7 @@
     font-size: 14px;
     font-weight: bold;
     background: var(--border-primary);
-    color: var(--button-color-primary);
+    color: var(--menu--button-color-primary);
     border: none;
     border-radius: 8px;
     cursor: pointer;

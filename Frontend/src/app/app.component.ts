@@ -14,10 +14,11 @@ import { ThemeService } from './services/theme.service';
   imports: [CommonModule, RouterModule, FormsModule, TranslateModule],
 })
 export class AppComponent {
-  themes = ['light', 'dark', 'red'];
+  themes = ['light', 'dark', 'brown'];
   isSettingsOpen = false;
   selectedTheme: string;
   selectedLanguage = 'en';
+  sessionName: string = 'Das Tor nach Corcosa';
 
   constructor(private cdRef: ChangeDetectorRef, private translate: TranslateService, private themeService: ThemeService) {
     this.selectedTheme = this.themeService.getTheme();
@@ -48,5 +49,9 @@ export class AppComponent {
   logout() {
     console.log('User logged out');
     window.location.href = '/login';
+  }
+
+  setSessionName(name: string) {
+    this.sessionName = name;
   }
 }

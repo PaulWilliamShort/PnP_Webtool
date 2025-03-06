@@ -1,7 +1,7 @@
 <header class="menu-bar">
     <button class="menu-button" routerLink="/create">{{ 'CREATE' | translate }}</button>
     <button class="menu-button" routerLink="/home">{{ 'HOMEPAGE' | translate }}</button>
-    <h1 class="session-name">Session Name</h1>
+    <h1 class="session-name">{{ sessionName }}</h1>
     <button class="menu-button" routerLink="/login">{{ 'LOGIN' | translate }}</button>
     <button class="menu-button settings" (click)="toggleSettings()">{{ 'SETTINGS' | translate }}</button>
 </header>
