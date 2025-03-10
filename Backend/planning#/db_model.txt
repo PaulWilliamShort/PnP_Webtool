@@ -1,0 +1,101 @@
+User: 
+    U_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Username VARCHAR(40) NOT NULL
+    Password VARCHAR(255) NOT NULL
+    Email VARCHAR(50) NOT NULL
+    Role VARCHAR(10) NOT NULL
+
+Characters:
+    Char_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Name VARCHAR (50) NOT NULL
+    Nickname VARCHAR (50) NOT NULL
+    Bennys tinyint NOT NULL
+    health VARCHAR(30) NOT NULL
+    conviction VARCHAR(100) NOT NULL
+    movement_range VARCHAR(4) NOT NULL
+    Parade tinyint NOT NULL
+    toughness tinyint NOT NULL
+    exhaustion tinyint NOT NULL
+    Konstitution tinyint NOT NULL
+    Strength tinyint NOT NULL
+    willpower tinyint NOT NULL
+    intelligence tinyint NOT NULL
+    dexterity tinyint NOT NULL
+    U_ID (from Users) INT UNSIGNED NOT NULL
+
+Inventory:
+    Item_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Item VARCHAR(50) NOT NULL
+    Notes TEXT
+    Name VARCHAR(40) NOT NULL
+
+Character_Inventory:
+    Char_Inventory_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Item_ID INT UNSIGNED NOT NULL
+    Char_ID INT UNSIGNED NOT NULL
+    Quantity INTEGER NOT NULL
+
+Talents:
+    Talent_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Name VARCHAR(50) NOT NULL
+
+Character_Talents:
+    Char_Talent_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Talent_ID INT UNSIGNED NOT NULL
+    Char_ID INT UNSIGNED NOT NULL
+    Value tinyint NOT NULL
+
+Handicaps:
+    Handicap_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Name VARCHAR(50) NOT NULL
+
+Character_Handicaps:
+    Char_Handicap_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Handicap_ID INT UNSIGNED NOT NULL
+    Char_ID INT UNSIGNED NOT NULL
+    Value tinyint NOT NULL
+
+Weapons:
+    Weapon_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Name VARCHAR(50) NOT NULL
+    range VARCHAR(30) NOT NULL
+    Firerate VARCHAR(20) NOT NULL
+    damage VARCHAR(20) NOT NULL
+    Armor_pen VARCHAR(20) NOT NULL
+    weight DECIMAL(5,2) NOT NULL
+    Notes TEXT
+
+Character_weapons:
+    Char_weapon_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Weapon_ID INT UNSIGNED NOT NULL
+    Char_ID INT UNSIGNED NOT NULL
+
+Abilities:
+    Ability_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Name VARCHAR(40) NOT NULL
+
+Character_abilities:
+    Char_ability_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Char_ID INT UNSIGNED NOT NULL
+    Ability_ID INT UNSIGNED NOT NULL
+    Value tinyint NOT NULL
+
+Spells:
+    Spell_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Name VARCHAR(50) NOT NULL
+    range VARCHAR(20) NOT NULL
+    Duration VARCHAR(50) NOT NULL
+    Effect VARCHAR(100) NOT NULL
+    Magicpoints tinyint NOT NULL
+
+Character_Spells:
+    Char_Spell_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Char_ID INT UNSIGNED NOT NULL
+    Spell_ID INT UNSIGNED NOT NULL
+    Value(?) tinyint NOT NULL
+
+Poker_Deck:
+    card_ID INT UNSIGNED AUTOINCREMENT NOT NULL
+    Value VARCHAR(20) NOT NULL
+    Symbol VARCHAR(1) NOT NULL
+    Char_ID INT UNSIGNED NOT NULL

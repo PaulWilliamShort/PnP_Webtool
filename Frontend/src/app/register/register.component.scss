@@ -2,15 +2,15 @@
     max-width: 400px;
     margin: 20px auto;
     padding: 20px;
-    background: #ffffff;
-    border: 2px solid #3b9ab2;
+    background: var(--import-background);
+    border: 2px solid var(--border-primary);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     font-family: 'Roboto', sans-serif;
   
     h1 {
-      color: #2e3a59;
+      color: var(--card-text-color);
       margin-bottom: 20px;
       font-size: 24px;
     }
@@ -30,29 +30,29 @@
       label {
         font-size: 14px;
         font-weight: bold;
-        color: #2e3a59;
+        color: var(--label-color);
       }
   
       input {
         width: 100%;
         padding: 10px 0px 10px 0px;
-        border: 1px solid #3b9ab2;
+        border: 1px solid var(--border-primary);
         border-radius: 6px;
-        background: #f3f6f9;
-        color: #2e3a59;
+        background: var(--input-background);
+        color: var(--card-text-color);
         transition: border-color 0.3s ease;
   
         &:focus {
           outline: none;
-          border-color: #2982a2;
+          border-color: var(--card-text-color);
         }
       }
     }
   
     .register-button {
       padding: 12px;
-      background: #3b9ab2;
-      color: white;
+      background: var(--border-primary);
+      color: var(--card-text-color);
       font-size: 16px;
       font-weight: bold;
       border: none;
@@ -63,12 +63,12 @@
       width: 100%;
   
       &:hover {
-        background: #2982a2;
+        background: var(--button-hover-color);
         transform: translateY(-2px);
       }
   
       &:active {
-        background: #256f8a;
+        background: var(--button-hover-color);
         transform: scale(0.98);
       }
     }
