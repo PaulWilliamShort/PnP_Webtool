@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import {AuthService} from '../services/auth.service';
+import {firstValueFrom} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -16,15 +18,17 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
-  login() {
-    if (this.username === 'admin' && this.password === 'password') {
-      this.errorMessage = '';
-      console.log('Login Successful! Redirecting...');
-      this.router.navigate(['/player']); // Redirects to "/player" after successful login
-    } else {
-      this.errorMessage = 'Invalid username or password';
+  async login() {
+    try {
+      const response = await firstValueFrom(this.authService.login(this.username, this.password));
+      console.log(response)
+      this.authService.saveToken(response.token);
+      this.router.navigate(['/profile']);
+    } catch (error) {
+      this.errorMessage = 'Login fehlgeschlagen!';
+      console.error('Fehler beim Login:', error);
     }
   }
 }
