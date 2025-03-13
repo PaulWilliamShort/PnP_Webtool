@@ -8,6 +8,11 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
+# SQLite-Datenbank ignorieren
+Backend/database.db
+*.db
+*.sqlite
+*.sqlite3
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
