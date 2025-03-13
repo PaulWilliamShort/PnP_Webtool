@@ -4,16 +4,16 @@
     "description": "Pen and Paper webtool backend server",
     "main": "server.js",
     "scripts": {
-      "test": "test",
-      "start": "node server.js"
+        "test": "test",
+        "start": "node server.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
-      "bcryptjs": "^3.0.2",
-      "cors": "^2.8.5",
-      "dotenv": "^16.4.7",
-      "express": "^4.21.2",
-      "sqlite3": "^5.1.7"
+        "bcryptjs": "^3.0.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "sqlite3": "^5.1.7"
     }
-  }
+}

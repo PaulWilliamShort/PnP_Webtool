@@ -35,7 +35,7 @@
   
       input {
         width: 100%;
-        padding: 10px 0px 10px 0px;
+        padding: 10px 5px;
         border: 1px solid var(--border-primary);
         border-radius: 6px;
         background: var(--input-background);
@@ -48,6 +48,58 @@
         }
       }
     }
+    
+    .role-toggle {
+      display: flex;
+      flex-direction: column;
+      margin-top: 15px;
+      color: #77ff00; // Gleiche grüne Farbe für den Text
+    
+      .toggle-switch {
+        width: 180px; // Breiter, damit die Schrift reinpasst
+        height: 40px;
+        background: var(--button-hover-color);
+        border-radius: 20px;
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px;
+        transition: background 0.3s ease-in-out;
+      }
+    
+      .switch-label {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        color: var(--card-text-color);
+        z-index: 1; // Text über dem Schalter halten
+      }
+    
+      .switch-button {
+        width: 35px;
+        height: 35px;
+        background: var(--import-background);
+        border-radius: 50%;
+        position: absolute;
+        top: 7.5px;
+        left: 5px;
+        transition: left 0.3s ease-in-out;
+      }
+    
+      // Aktiviert: Spielleiter-Modus (Schalter nach rechts)
+      .toggle-switch.active {
+        background: var(--button-hover-color); // Grün für Spielleiter
+      }
+    
+      .toggle-switch.active .switch-button {
+        left: calc(100% - 40px);
+      }
+    }
+    
   
     .register-button {
       padding: 12px;
