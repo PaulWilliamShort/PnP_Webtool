@@ -21,7 +21,6 @@ router.post('/', async (req, res) => {
             return res.status(401).json({message: 'Benutzer nicht gefunden'});
         }
         bcrypt.compare(password, user.Password, (err, isMatch) => {
-            console.log(err)
             if (err) {
                 return res.status(500).json({message: 'Fehler beim Vergleichen der Passwörter', err});
             }

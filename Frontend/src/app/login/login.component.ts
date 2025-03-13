@@ -23,7 +23,6 @@ export class LoginComponent {
   async login() {
     try {
       const response = await firstValueFrom(this.authService.login(this.username, this.password));
-      console.log(response)
       this.authService.saveToken(response.token);
       this.router.navigate(['/profile']);
     } catch (error) {
