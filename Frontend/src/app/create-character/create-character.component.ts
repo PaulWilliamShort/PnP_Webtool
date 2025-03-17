@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
 interface CharacterField {
   name: string;
@@ -44,6 +45,8 @@ interface Character {
   nickname: string;
   bennys: number;
   conviction: string;
+  health: number;
+  exhaustion: number;
   attributes: { [key: string]: number };
   fightInfo: { [key: string]: number };
   abilities: CharacterField[];
@@ -67,6 +70,8 @@ export class CreateCharacterComponent implements OnInit {
     nickname: '',
     bennys: 0,
     conviction: '',
+    health: 0,
+    exhaustion: 0,
     attributes: {
       dexterity: 0,
       intelligence: 0,
@@ -92,7 +97,7 @@ export class CreateCharacterComponent implements OnInit {
   attributeKeys: { key: string; translated: string }[] = [];
   fightInfoKeys: { key: string; translated: string }[] = [];
 
-  constructor(private translate: TranslateService) {}
+  constructor(private http: HttpClient, private translate: TranslateService) {}
 
   ngOnInit() {
     this.initializeTranslations();
@@ -253,6 +258,24 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   createCharacter() {
-    alert(this.translate.instant('CHARACTER_CREATED_SUCCESS'));
+    const token = localStorage.getItem('token'); // Token holen
+    if (!token) {
+      alert(this.translate.instant('NOT_AUTHORIZED'));
+      return;
+    }
+
+    const headers = { Authorization: `Bearer ${token}` };
+
+    this.http.post('http://localhost:5000/api/characters/create', this.character, { headers })
+      .subscribe(
+        (response) => {
+          alert(this.translate.instant('CHARACTER_CREATED_SUCCESS'));
+          console.log('Character saved:', response);
+        },
+        (error) => {
+          alert(this.translate.instant('CHARACTER_CREATION_FAILED'));
+          console.error('Error:', error);
+        }
+      );
   }
 }

@@ -38,6 +38,7 @@ db.serialize(() => {
     willpower TINYINT NOT NULL,
     intelligence TINYINT NOT NULL,
     dexterity TINYINT NOT NULL,
+    ProfilePicture BLOB,
     U_ID INTEGER NOT NULL,
     FOREIGN KEY (U_ID) REFERENCES users(U_ID)
   )`);
